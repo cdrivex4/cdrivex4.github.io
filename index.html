@@ -182,18 +182,9 @@ nav {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  object-position: center 35%;
+  object-position: center 30%;
   display: block;
   border: 3px solid var(--bg);
-  /* Progressive blur-up */
-  filter: blur(8px);
-  transform: scale(1.05);
-  transition: filter 0.6s ease, transform 0.6s ease;
-}
-
-.avatar-ring img.loaded {
-  filter: blur(0);
-  transform: scale(1);
 }
 
 /* hero text */
@@ -693,18 +684,14 @@ footer {
 
     <div class="hero-avatar">
       <div class="avatar-ring">
-        <picture>
-          <source type="image/webp" srcset="headshot.webp">
-          <img
-            id="avatar-img"
-            src="headshot-opt.jpg"
-            alt="Curtis Hoareau"
-            width="214"
-            height="214"
-            decoding="async"
-            style="background: url('data:image/jpeg;base64,/9j//gAQTGF2YzYyLjI4LjEwMQD/2wBDAAgeHiMeIykpKSkpKTAtMDIyMjAwMDAyMjI2NjY/Pz82NjYyMjY2PDw/P0VHRUFBP0FHR0tLS1paVlZpaWyBgZv/xABlAAEBAQEBAAAAAAAAAAAAAAAEAwUHBgEBAQEAAAAAAAAAAAAAAAAAAwIEEAABAwIGAgMBAAAAAAAAAAABAgARAzEhURKBBBNhkUFxFNERAQADAQAAAAAAAAAAAAAAAAABEUEh/8AAEQgAFAAUAwEiAAIRAAMRAP/aAAwDAQACEQMRAD8ACqkjsUV4zYeIbRSGtFSlaQCMXu8laUimtMKUkQyUuQE3AuDDLttfKegqUVarHZj6jkr09NXMxsGb9g8N2RzeSoYs9ojN1H8c/kfbnYVki1FGdmPWc3WpfZiaCf/Z') center 20%/cover no-repeat;"
-          >
-        </picture>
+        <img
+          id="avatar-img"
+          src="headshot-opt.jpg"
+          alt="Curtis Hoareau"
+          width="214"
+          height="214"
+          loading="eager"
+        >
       </div>
     </div>
 
@@ -712,7 +699,7 @@ footer {
       <p class="hero-eyebrow">System Support Manager · Seychelles</p>
       <h1>Curtis<br>Hoareau</h1>
       <p class="hero-tagline">
-        <span id="typed-text"></span><span class="cursor"></span>
+        <span id="typed-text">Infrastructure Engineer &amp; Systems Developer</span><span class="cursor"></span>
       </p>
       <div class="hero-cta">
         <a href="#projects" class="btn-primary">View Projects</a>
@@ -728,19 +715,19 @@ footer {
 <div id="stats">
   <div class="stats-inner">
     <div class="stat-item">
-      <strong><span class="count" data-target="20">0</span>+</strong>
+      <strong><span class="count" data-target="20">20</span>+</strong>
       <span>Years in Enterprise IT</span>
     </div>
     <div class="stat-item">
-      <strong><span class="count" data-target="4">0</span></strong>
+      <strong><span class="count" data-target="4">4</span></strong>
       <span>Active R&amp;D Projects</span>
     </div>
     <div class="stat-item">
-      <strong><span class="count" data-target="1">0</span></strong>
+      <strong><span class="count" data-target="1">1</span></strong>
       <span>Public Sector Agency</span>
     </div>
     <div class="stat-item">
-      <strong><span class="count" data-target="1">0</span></strong>
+      <strong><span class="count" data-target="1">1</span></strong>
       <span>Island Nation</span>
     </div>
   </div>
@@ -1021,18 +1008,8 @@ footer {
   counters.forEach(c => obs.observe(c));
 })();
 
-/* ── Progressive blur-up reveal ── */
+/* ── Scroll Reveal ── */
 (function() {
-  const img = document.getElementById('avatar-img');
-  if (!img) return;
-  const reveal = () => img.classList.add('loaded');
-  if (img.complete && img.naturalWidth > 0) {
-    reveal();
-  } else {
-    img.addEventListener('load', reveal);
-  }
-})();
-
   const els = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
