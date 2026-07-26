@@ -429,6 +429,7 @@ hr.section-divider {
   background: linear-gradient(135deg, transparent, rgba(56,189,248,0.04));
   opacity: 0;
   transition: opacity 0.3s;
+  pointer-events: none;
 }
 
 .card:hover {
@@ -493,6 +494,8 @@ hr.section-divider {
   gap: 10px;
   flex-wrap: wrap;
   margin-top: auto;
+  position: relative;
+  z-index: 10;
 }
 
 .card-link {
@@ -505,6 +508,9 @@ hr.section-divider {
   font-weight: 600;
   text-decoration: none;
   transition: background 0.2s, transform 0.2s;
+  position: relative;
+  z-index: 10;
+  cursor: pointer;
 }
 
 .card-link-solid {
@@ -816,7 +822,7 @@ footer {
     <!-- Antigravity -->
     <div class="card project-card reveal">
       <span class="card-icon">🚀</span>
-      <h3>Antigravity</h3>
+      <h3><a href="https://github.com/cdrivex4/antigravity" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">Antigravity ↗</a></h3>
       <div class="card-badges">
         <span class="badge badge-blue">C++ / Qt</span>
         <span class="badge badge-purple">D3D11 / FFmpeg</span>
