@@ -178,6 +178,15 @@ nav {
   object-position: center 20%;
   display: block;
   border: 3px solid var(--bg);
+  /* Progressive blur-up */
+  filter: blur(8px);
+  transform: scale(1.05);
+  transition: filter 0.6s ease, transform 0.6s ease;
+}
+
+.avatar-ring img.loaded {
+  filter: blur(0);
+  transform: scale(1);
 }
 
 /* hero text */
@@ -677,7 +686,18 @@ footer {
 
     <div class="hero-avatar">
       <div class="avatar-ring">
-        <img src="headshot.jpg" alt="Curtis Hoareau">
+        <picture>
+          <source type="image/webp" srcset="headshot.webp">
+          <img
+            id="avatar-img"
+            src="headshot-opt.jpg"
+            alt="Curtis Hoareau"
+            width="214"
+            height="214"
+            decoding="async"
+            style="background: url('data:image/jpeg;base64,/9j//gAQTGF2YzYyLjI4LjEwMQD/2wBDAAgeHiMeIykpKSkpKTAtMDIyMjAwMDAyMjI2NjY/Pz82NjYyMjY2PDw/P0VHRUFBP0FHR0tLS1paVlZpaWyBgZv/xABlAAEBAQEBAAAAAAAAAAAAAAAEAwUHBgEBAQEAAAAAAAAAAAAAAAAAAwIEEAABAwIGAgMBAAAAAAAAAAABAgARAzEhURKBBBNhkUFxFNERAQADAQAAAAAAAAAAAAAAAAABEUEh/8AAEQgAFAAUAwEiAAIRAAMRAP/aAAwDAQACEQMRAD8ACqkjsUV4zYeIbRSGtFSlaQCMXu8laUimtMKUkQyUuQE3AuDDLttfKegqUVarHZj6jkr09NXMxsGb9g8N2RzeSoYs9ojN1H8c/kfbnYVki1FGdmPWc3WpfZiaCf/Z') center 20%/cover no-repeat;"
+          >
+        </picture>
       </div>
     </div>
 
@@ -994,8 +1014,18 @@ footer {
   counters.forEach(c => obs.observe(c));
 })();
 
-/* ── Scroll Reveal ── */
+/* ── Progressive blur-up reveal ── */
 (function() {
+  const img = document.getElementById('avatar-img');
+  if (!img) return;
+  const reveal = () => img.classList.add('loaded');
+  if (img.complete && img.naturalWidth > 0) {
+    reveal();
+  } else {
+    img.addEventListener('load', reveal);
+  }
+})();
+
   const els = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
