@@ -1,514 +1,1011 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Curtis Hoareau — System Support Manager at the Seychelles Infrastructure Agency. 20+ years in enterprise IT, infrastructure, and AI-assisted software engineering.">
+<meta property="og:title" content="Curtis Hoareau | Systems, Infrastructure & AI Engineering">
+<meta property="og:description" content="Portfolio of Curtis Hoareau — infrastructure, systems research, and AI-assisted software development.">
+<meta property="og:type" content="website">
 
 <title>Curtis Hoareau | Systems, Infrastructure & AI-Assisted Engineering</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;700;800&display=swap" rel="stylesheet">
+
 <style>
 
+/* ─── RESET & BASE ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-    --background: #0f172a;
-    --panel: #1e293b;
-    --accent: #38bdf8;
-    --text: #f8fafc;
-    --muted: #94a3b8;
+  --bg:        #070d1a;
+  --bg2:       #0d1628;
+  --panel:     rgba(255,255,255,0.04);
+  --border:    rgba(255,255,255,0.08);
+  --accent:    #38bdf8;
+  --accent2:   #818cf8;
+  --accent3:   #34d399;
+  --text:      #f1f5f9;
+  --muted:     #94a3b8;
+  --glow:      rgba(56,189,248,0.18);
+  --radius:    16px;
+  font-size: 16px;
 }
 
-* {
-    box-sizing: border-box;
-}
+html { scroll-behavior: smooth; }
 
 body {
-
-    margin:0;
-    background:var(--background);
-    color:var(--text);
-
-    font-family:
-        "Segoe UI",
-        Roboto,
-        Arial,
-        sans-serif;
-
-    line-height:1.6;
-
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
 }
 
-
-header {
-
-    text-align:center;
-    padding:80px 20px;
-
-    border-bottom:1px solid #334155;
-
+/* ─── CANVAS STARS ─────────────────────────────────── */
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
-
-header h1 {
-
-    font-size:3rem;
-    margin-bottom:10px;
-
+/* ─── NAV ──────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  height: 64px;
+  background: rgba(7, 13, 26, 0.75);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
 }
 
-
-.tagline {
-
-    color:var(--muted);
-    font-size:1.2rem;
-
+.nav-logo {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
 }
 
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
 
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--accent); }
+
+/* ─── HERO ─────────────────────────────────────────── */
+#hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 5% 60px;
+  overflow: hidden;
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* animated gradient orbs */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.orb1 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, #38bdf8, transparent);
+  top: -100px; left: -100px;
+  animation: float 8s ease-in-out infinite;
+}
+.orb2 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, #818cf8, transparent);
+  bottom: -80px; right: 5%;
+  animation: float 11s ease-in-out infinite reverse;
+}
+.orb3 {
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, #34d399, transparent);
+  top: 40%; left: 50%;
+  animation: float 9s ease-in-out infinite 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%       { transform: translateY(-30px) scale(1.05); }
+}
+
+/* avatar */
+.hero-avatar {
+  flex-shrink: 0;
+  position: relative;
+}
+
+.avatar-ring {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+  animation: spin-ring 6s linear infinite;
+  box-shadow: 0 0 40px var(--glow);
+}
+
+@keyframes spin-ring {
+  0%   { background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3)); }
+  33%  { background: linear-gradient(225deg, var(--accent2), var(--accent3), var(--accent)); }
+  66%  { background: linear-gradient(315deg, var(--accent3), var(--accent), var(--accent2)); }
+  100% { background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3)); }
+}
+
+.avatar-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  border: 3px solid var(--bg);
+}
+
+/* hero text */
+.hero-text { flex: 1; }
+
+.hero-eyebrow {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.hero-text h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #f1f5f9 30%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-tagline {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: 28px;
+  max-width: 520px;
+}
+
+/* typing cursor */
+.cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  animation: blink 0.85s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn-primary {
+  padding: 12px 28px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #070d1a;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px var(--glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(56,189,248,0.4);
+}
+
+.btn-outline {
+  padding: 12px 28px;
+  border-radius: 50px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.btn-outline:hover {
+  border-color: var(--accent);
+  background: rgba(56,189,248,0.08);
+  transform: translateY(-2px);
+}
+
+/* ─── STAT BAR ─────────────────────────────────────── */
+#stats {
+  position: relative;
+  z-index: 1;
+  background: rgba(255,255,255,0.02);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.stats-inner {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+  gap: 30px;
+  text-align: center;
+}
+
+.stat-item strong {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.stat-item span {
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: 6px;
+  display: block;
+}
+
+/* ─── GENERAL LAYOUT ───────────────────────────────── */
 .container {
-
-    width:min(1100px,90%);
-    margin:auto;
-
+  max-width: 1100px;
+  margin: auto;
+  padding: 0 5%;
 }
 
-
-section {
-
-    padding:50px 0;
-
+section.block {
+  position: relative;
+  z-index: 1;
+  padding: 90px 0;
 }
 
-
-h2 {
-
-    color:var(--accent);
-    margin-bottom:20px;
-
+.section-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 10px;
 }
 
-
-p {
-
-    font-size:1.05rem;
-
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 14px;
+  line-height: 1.2;
 }
 
-
-.grid {
-
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(300px,1fr));
-
-    gap:25px;
-
+.section-title span {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
+.section-sub {
+  color: var(--muted);
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin-bottom: 50px;
+}
+
+hr.section-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* ─── ABOUT ────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--muted);
+  margin-bottom: 16px;
+  font-size: 1.02rem;
+}
+
+.about-text p strong { color: var(--text); }
+
+.skills-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.skill-tag {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 1px solid;
+  white-space: nowrap;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.skill-tag:hover {
+  transform: translateY(-2px);
+}
+
+.skill-tag.blue  { color: var(--accent);  border-color: rgba(56,189,248,0.3);  background: rgba(56,189,248,0.07);  }
+.skill-tag.purple{ color: var(--accent2); border-color: rgba(129,140,248,0.3); background: rgba(129,140,248,0.07); }
+.skill-tag.green { color: var(--accent3); border-color: rgba(52,211,153,0.3);  background: rgba(52,211,153,0.07);  }
+
+/* ─── CARDS GRID ───────────────────────────────────── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
 
 .card {
-
-    background:var(--panel);
-
-    padding:25px;
-
-    border-radius:12px;
-
-    border:1px solid #334155;
-
-    transition:0.25s;
-
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  backdrop-filter: blur(8px);
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  overflow: hidden;
 }
 
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, transparent, rgba(56,189,248,0.04));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
 
 .card:hover {
-
-    transform:translateY(-5px);
-
+  transform: translateY(-6px);
+  border-color: rgba(56,189,248,0.4);
+  box-shadow: 0 12px 40px rgba(56,189,248,0.12);
 }
 
+.card:hover::before { opacity: 1; }
+
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  display: block;
+}
 
 .card h3 {
-
-    margin-top:0;
-
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
 }
-
 
 .card p {
-
-    color:var(--muted);
-
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
 }
 
-
-.buttons {
-
-    margin-top:20px;
-
+/* ─── PROJECT CARD EXTRAS ──────────────────────────── */
+.project-card {
+  display: flex;
+  flex-direction: column;
 }
 
+.project-card p { flex: 1; }
 
-.buttons a {
-
-    display:inline-block;
-
-    background:var(--accent);
-
-    color:#082f49;
-
-    padding:8px 16px;
-
-    margin-right:8px;
-
-    border-radius:6px;
-
-    text-decoration:none;
-
-    font-weight:bold;
-
+.card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
 }
 
+.badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 50px;
+  letter-spacing: 0.04em;
+}
 
+.badge-blue   { background: rgba(56,189,248,0.15);  color: var(--accent);  }
+.badge-purple { background: rgba(129,140,248,0.15); color: var(--accent2); }
+.badge-green  { background: rgba(52,211,153,0.15);  color: var(--accent3); }
+.badge-orange { background: rgba(251,146,60,0.15);  color: #fb923c;        }
+.badge-soon   { background: rgba(148,163,184,0.12); color: var(--muted);   }
+
+.card-links {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.card-link-solid {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #070d1a;
+}
+
+.card-link-solid:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--glow);
+}
+
+.card-link-ghost {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+}
+
+.card-link-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(56,189,248,0.05);
+}
+
+.soon-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  padding: 8px 0;
+}
+
+.soon-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent3);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.4); }
+}
+
+/* ─── BLOG SECTION ─────────────────────────────────── */
+.blog-card {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.blog-card:hover {
+  border-color: rgba(129,140,248,0.4);
+  box-shadow: 0 12px 40px rgba(129,140,248,0.1);
+}
+
+.blog-icon {
+  font-size: 3.5rem;
+  flex-shrink: 0;
+}
+
+.blog-text h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.blog-text p {
+  color: var(--muted);
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+/* ─── FOOTER ───────────────────────────────────────── */
 footer {
-
-    text-align:center;
-
-    padding:30px;
-
-    color:var(--muted);
-
-    border-top:1px solid #334155;
-
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 50px 5%;
+  text-align: center;
 }
 
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--accent); }
+
+.footer-copy {
+  color: var(--muted);
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+/* ─── SCROLL REVEAL ────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 768px) {
+
+  .hero-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 36px;
+  }
+
+  .hero-cta { justify-content: center; }
+
+  .about-grid { grid-template-columns: 1fr; }
+
+  .nav-links { display: none; }
+
+  .blog-card { flex-direction: column; text-align: center; }
+
+  .avatar-ring { width: 160px; height: 160px; }
+}
 
 </style>
-
 </head>
-
-
 <body>
 
+<!-- STARS CANVAS -->
+<canvas id="starfield"></canvas>
 
-<header>
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">CH</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#focus">Focus</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="https://github.com/cdrivex4" target="_blank" rel="noopener">GitHub ↗</a></li>
+  </ul>
+</nav>
 
-<h1>Curtis Hoareau</h1>
+<!-- ORBS -->
+<div class="hero-orb orb1"></div>
+<div class="hero-orb orb2"></div>
+<div class="hero-orb orb3"></div>
 
-<p class="tagline">
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-inner">
 
-System Support Manager | Infrastructure | AI-Assisted Software Development
+    <div class="hero-avatar">
+      <div class="avatar-ring">
+        <img src="headshot.jpg" alt="Curtis Hoareau">
+      </div>
+    </div>
 
-</p>
+    <div class="hero-text">
+      <p class="hero-eyebrow">System Support Manager · Seychelles</p>
+      <h1>Curtis<br>Hoareau</h1>
+      <p class="hero-tagline">
+        <span id="typed-text"></span><span class="cursor"></span>
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-primary">View Projects</a>
+        <a href="https://github.com/cdrivex4" target="_blank" rel="noopener" class="btn-outline">GitHub Profile ↗</a>
+        <a href="https://piped2u.blogspot.com/" target="_blank" rel="noopener" class="btn-outline">Technical Blog ↗</a>
+      </div>
+    </div>
 
-</header>
+  </div>
+</section>
 
+<!-- ─── STATS ─── -->
+<div id="stats">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <strong><span class="count" data-target="20">0</span>+</strong>
+      <span>Years in Enterprise IT</span>
+    </div>
+    <div class="stat-item">
+      <strong><span class="count" data-target="4">0</span></strong>
+      <span>Active R&amp;D Projects</span>
+    </div>
+    <div class="stat-item">
+      <strong><span class="count" data-target="1">0</span></strong>
+      <span>Public Sector Agency</span>
+    </div>
+    <div class="stat-item">
+      <strong><span class="count" data-target="1">0</span></strong>
+      <span>Island Nation</span>
+    </div>
+  </div>
+</div>
 
+<!-- ─── MAIN CONTENT ─── -->
 <div class="container">
 
-
-<section>
-
-<h2>About Me</h2>
-
-
-<p>
-
-I am the <strong>System Support Manager at the Seychelles Infrastructure Agency (SIA)</strong>,
-where my professional career has been focused on enterprise IT systems administration,
-infrastructure management and supporting the technology platforms that organisations depend on.
-
-</p>
-
-
-<p>
-
-Over the past two decades, I have worked extensively with
-<strong>Windows Server, Active Directory, networking, virtualisation,
-storage, automation and enterprise support environments</strong>
-within the public sector.
-
-</p>
-
-
-<p>
-
-My approach to technology has always been centred around understanding systems as a whole —
-identifying how components interact, finding root causes and developing practical solutions
-to complex technical problems.
-
-</p>
-
-
-<p>
-
-Much of my technical knowledge has been developed through hands-on experience,
-continuous learning and a determination to understand how things work.
-
-</p>
-
-
-<p>
-
-In recent years, I have expanded my interests into
-<strong>software engineering and AI-assisted development workflows</strong>,
-using modern tools to help design, prototype and build increasingly ambitious applications
-and research projects.
-
-</p>
-
-
-<p>
-
-This website documents that journey — showcasing my projects,
-technical experiments, research and ongoing exploration of modern technology.
-
-</p>
-
-
+<!-- ABOUT -->
+<section class="block" id="about">
+  <div class="reveal">
+    <p class="section-label">Background</p>
+    <h2 class="section-title">Infrastructure at scale.<br><span>Engineering by curiosity.</span></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>I am the <strong>System Support Manager at the Seychelles Infrastructure Agency (SIA)</strong>, where my professional career has been focused on enterprise IT systems administration, infrastructure management and supporting the technology platforms that organisations depend on.</p>
+      <p>Over the past two decades, I have worked extensively with <strong>Windows Server, Active Directory, networking, virtualisation, storage, automation</strong> and enterprise support environments within the public sector.</p>
+      <p>My approach to technology has always been centred around understanding systems as a whole — identifying how components interact, finding root causes and building practical solutions to complex technical problems.</p>
+      <p>In recent years, I have expanded into <strong>software engineering and AI-assisted development workflows</strong>, using modern tools to design, prototype and build increasingly ambitious applications and research projects.</p>
+    </div>
+    <div class="reveal" style="padding-top: 8px;">
+      <p class="section-label" style="margin-bottom: 16px;">Core Expertise</p>
+      <div class="skills-cloud">
+        <span class="skill-tag blue">Windows Server</span>
+        <span class="skill-tag blue">Active Directory</span>
+        <span class="skill-tag blue">Networking</span>
+        <span class="skill-tag blue">Virtualisation</span>
+        <span class="skill-tag blue">Enterprise Storage</span>
+        <span class="skill-tag purple">PowerShell</span>
+        <span class="skill-tag purple">Automation</span>
+        <span class="skill-tag purple">C++ / Qt</span>
+        <span class="skill-tag purple">Python</span>
+        <span class="skill-tag green">AI-Assisted Dev</span>
+        <span class="skill-tag green">Multi-Agent Workflows</span>
+        <span class="skill-tag green">GIS / Digital Twins</span>
+        <span class="skill-tag green">Systems Research</span>
+      </div>
+    </div>
+  </div>
 </section>
 
+<hr class="section-divider">
 
+<!-- FOCUS -->
+<section class="block" id="focus">
+  <div class="reveal">
+    <p class="section-label">Current Focus</p>
+    <h2 class="section-title">What I'm building <span>right now</span></h2>
+    <p class="section-sub">At the intersection of infrastructure knowledge and modern software engineering.</p>
+  </div>
+  <div class="cards-grid">
 
-<section>
+    <div class="card reveal">
+      <span class="card-icon">🤖</span>
+      <h3>AI-Assisted Engineering</h3>
+      <p>Exploring how AI tools can assist with software architecture, planning, documentation, testing and development workflows — including multi-agent orchestration and local-first AI environments.</p>
+    </div>
 
-<h2>Current Focus</h2>
+    <div class="card reveal">
+      <span class="card-icon">⚙️</span>
+      <h3>High-Performance Software</h3>
+      <p>Building C++/Qt applications that demand real-time responsiveness — combining infrastructure knowledge, concurrency design, hardware acceleration and practical performance engineering.</p>
+    </div>
 
+    <div class="card reveal">
+      <span class="card-icon">🌍</span>
+      <h3>Systems Research</h3>
+      <p>Investigating distributed systems, digital twins, automation platforms, GIS modelling and future approaches to engineering complex real-world environments.</p>
+    </div>
 
-<div class="grid">
-
-
-<div class="card">
-
-<h3>AI-Assisted Engineering</h3>
-
-<p>
-
-Exploring how AI tools can assist with software architecture,
-planning, documentation, testing and development workflows.
-
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>Software Development</h3>
-
-<p>
-
-Building applications that combine infrastructure knowledge,
-automation, data management and practical problem solving.
-
-</p>
-
-</div>
-
-
-<div class="card">
-
-<h3>Systems Research</h3>
-
-<p>
-
-Investigating distributed systems, digital twins,
-automation platforms and future approaches to engineering.
-
-</p>
-
-</div>
-
-
-</div>
-
+  </div>
 </section>
 
+<hr class="section-divider">
 
+<!-- PROJECTS -->
+<section class="block" id="projects">
+  <div class="reveal">
+    <p class="section-label">Work</p>
+    <h2 class="section-title">Featured <span>Projects</span></h2>
+    <p class="section-sub">Open research, engineering experiments and software built in the field.</p>
+  </div>
+  <div class="cards-grid">
 
+    <!-- Antigravity -->
+    <div class="card project-card reveal">
+      <span class="card-icon">🚀</span>
+      <h3>Antigravity</h3>
+      <div class="card-badges">
+        <span class="badge badge-blue">C++ / Qt</span>
+        <span class="badge badge-purple">D3D11 / FFmpeg</span>
+        <span class="badge badge-green">Open Source</span>
+      </div>
+      <p>A high-performance Qt/C++ media application exploring large-scale file management, GPU-accelerated video thumbnailing, hardware concurrency, and intelligent scrolling at scale.</p>
+      <div class="card-links">
+        <a href="https://github.com/cdrivex4/antigravity" target="_blank" rel="noopener" class="card-link card-link-solid">GitHub ↗</a>
+        <a href="https://github.com/cdrivex4/antigravity#readme" target="_blank" rel="noopener" class="card-link card-link-ghost">Docs ↗</a>
+      </div>
+    </div>
 
-<section>
+    <!-- AI Engineering Platform -->
+    <div class="card project-card reveal">
+      <span class="card-icon">🧠</span>
+      <h3>AI Engineering Platform</h3>
+      <div class="card-badges">
+        <span class="badge badge-purple">Multi-Agent</span>
+        <span class="badge badge-blue">Local-First</span>
+        <span class="badge badge-soon">In Development</span>
+      </div>
+      <p>Research into AI-assisted software engineering, multi-agent workflows, validation systems and local-first development environments designed for complex engineering problems.</p>
+      <div class="card-links">
+        <div class="soon-label"><span class="soon-dot"></span>Repository coming soon</div>
+      </div>
+    </div>
 
+    <!-- Call Intelligence -->
+    <div class="card project-card reveal">
+      <span class="card-icon">📊</span>
+      <h3>Call Intelligence Platform</h3>
+      <div class="card-badges">
+        <span class="badge badge-orange">Analytics</span>
+        <span class="badge badge-blue">Data Engineering</span>
+        <span class="badge badge-soon">In Development</span>
+      </div>
+      <p>A personal analytics platform designed to consolidate, analyse and understand phone communication history across multiple devices and service providers.</p>
+      <div class="card-links">
+        <div class="soon-label"><span class="soon-dot"></span>Repository coming soon</div>
+      </div>
+    </div>
 
-<h2>Featured Projects</h2>
+    <!-- Mahé Digital Twin -->
+    <div class="card project-card reveal">
+      <span class="card-icon">🗺️</span>
+      <h3>Mahé Digital Twin</h3>
+      <div class="card-badges">
+        <span class="badge badge-green">GIS</span>
+        <span class="badge badge-blue">Simulation</span>
+        <span class="badge badge-soon">Long-Term Research</span>
+      </div>
+      <p>A long-term exploration of GIS, simulation, traffic modelling and realistic digital representation of infrastructure environments for the island of Mahé, Seychelles.</p>
+      <div class="card-links">
+        <div class="soon-label"><span class="soon-dot"></span>Repository coming soon</div>
+      </div>
+    </div>
 
-
-<div class="grid">
-
-
-
-<div class="card">
-
-<h3>Antigravity</h3>
-
-<p>
-
-A high-performance Qt/C++ media application exploring
-large-scale file management, performance optimisation,
-and intelligent workflows.
-
-</p>
-
-<div class="buttons">
-
-<a href="https://github.com/cdrivex4/antigravity" target="_blank" rel="noopener">GitHub</a>
-
-<a href="https://github.com/cdrivex4/antigravity#readme" target="_blank" rel="noopener">Documentation</a>
-
-</div>
-
-</div>
-
-
-
-
-<div class="card">
-
-<h3>AI Engineering Platform</h3>
-
-<p>
-
-Research into AI-assisted software engineering,
-multi-agent workflows, validation systems and
-local-first development environments.
-
-</p>
-
-<div class="buttons">
-
-<a href="#">GitHub</a>
-
-</div>
-
-</div>
-
-
-
-
-<div class="card">
-
-<h3>Call Intelligence Platform</h3>
-
-<p>
-
-A personal analytics platform designed to consolidate,
-analyse and understand phone communication history
-across multiple devices.
-
-</p>
-
-<div class="buttons">
-
-<a href="#">GitHub</a>
-
-</div>
-
-</div>
-
-
-
-
-<div class="card">
-
-<h3>Mahé Digital Twin</h3>
-
-<p>
-
-A long-term exploration of GIS, simulation,
-traffic modelling and realistic digital representation
-of infrastructure environments.
-
-</p>
-
-<div class="buttons">
-
-<a href="#">GitHub</a>
-
-</div>
-
-</div>
-
-
-
-</div>
-
-
+  </div>
 </section>
 
+<hr class="section-divider">
 
-
-
-
-<section>
-
-<h2>Technical Writing & Research</h2>
-
-
-<p>
-
-Articles, engineering notes, architecture discussions,
-experiments and lessons learned from building and maintaining
-complex technology systems.
-
-</p>
-
-
-<div class="buttons">
-
-<a href="https://piped2u.blogspot.com/" target="_blank" rel="noopener">
-
-Technical Blog
-
-</a>
-
-</div>
-
-
+<!-- WRITING -->
+<section class="block" id="writing">
+  <div class="reveal">
+    <p class="section-label">Technical Writing</p>
+    <h2 class="section-title">Notes from the <span>field</span></h2>
+  </div>
+  <div class="blog-card reveal">
+    <div class="blog-icon">✍️</div>
+    <div class="blog-text">
+      <h3>Piped2U — Technical Blog</h3>
+      <p>Articles, engineering notes, architecture discussions, experiments and lessons learned from building and maintaining complex technology systems over two decades in the field.</p>
+      <div class="card-links">
+        <a href="https://piped2u.blogspot.com/" target="_blank" rel="noopener" class="card-link card-link-solid">Read the Blog ↗</a>
+      </div>
+    </div>
+  </div>
 </section>
 
+</div><!-- /container -->
 
-
-
-
-<section>
-
-<h2>GitHub</h2>
-
-
-<p>
-
-Source code, experiments, prototypes and open development projects.
-
-</p>
-
-
-<div class="buttons">
-
-<a href="https://github.com/cdrivex4" target="_blank" rel="noopener">
-
-GitHub Profile
-
-</a>
-
-</div>
-
-
-</section>
-
-
-
-</div>
-
-
-
+<!-- FOOTER -->
 <footer>
-
-© 2026 Curtis Hoareau
-
+  <div class="footer-links">
+    <a href="https://github.com/cdrivex4" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013.01-.4c1.02 0 2.05.14 3.01.4 2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      GitHub
+    </a>
+    <a href="https://piped2u.blogspot.com/" target="_blank" rel="noopener">
+      ✍️ Technical Blog
+    </a>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+  </div>
+  <p class="footer-copy">© 2026 Curtis Hoareau · Seychelles Infrastructure Agency</p>
 </footer>
 
+<!-- ─── SCRIPTS ─── -->
+<script>
 
+/* ── Starfield ── */
+(function() {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function initStars() {
+    stars = [];
+    for (let i = 0; i < 160; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.3,
+        a: Math.random(),
+        speed: Math.random() * 0.3 + 0.05
+      });
+    }
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => {
+      s.a += s.speed * 0.01;
+      const alpha = (Math.sin(s.a) * 0.5 + 0.5) * 0.7 + 0.1;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(drawStars);
+  }
+
+  resize();
+  initStars();
+  drawStars();
+  window.addEventListener('resize', () => { resize(); initStars(); });
+})();
+
+/* ── Typing Effect ── */
+(function() {
+  const phrases = [
+    "Infrastructure Engineer.",
+    "AI-Assisted Developer.",
+    "Systems Thinker.",
+    "20+ Years in the Field."
+  ];
+  let pi = 0, ci = 0, deleting = false;
+  const el = document.getElementById('typed-text');
+
+  function tick() {
+    const phrase = phrases[pi];
+    if (!deleting) {
+      el.textContent = phrase.slice(0, ++ci);
+      if (ci === phrase.length) { deleting = true; setTimeout(tick, 1800); return; }
+    } else {
+      el.textContent = phrase.slice(0, --ci);
+      if (ci === 0) { deleting = false; pi = (pi + 1) % phrases.length; }
+    }
+    setTimeout(tick, deleting ? 40 : 75);
+  }
+  setTimeout(tick, 800);
+})();
+
+/* ── Counter Animation ── */
+(function() {
+  const counters = document.querySelectorAll('.count');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = +el.dataset.target;
+      let cur = 0;
+      const inc = target / 40;
+      const tick = () => {
+        cur = Math.min(cur + inc, target);
+        el.textContent = Math.ceil(cur);
+        if (cur < target) requestAnimationFrame(tick);
+      };
+      tick();
+      obs.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => obs.observe(c));
+})();
+
+/* ── Scroll Reveal ── */
+(function() {
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => obs.observe(el));
+})();
+
+</script>
 </body>
-
 </html>
