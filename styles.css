@@ -586,6 +586,92 @@ hr.section-divider {
   font-size: 1rem;
 }
 
+/* ─── CONTACT SECTION ──────────────────────────────── */
+.contact-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 40px;
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+}
+
+.contact-card:hover {
+  border-color: rgba(56,189,248,0.3);
+  box-shadow: 0 16px 48px rgba(56,189,248,0.08);
+}
+
+.contact-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-lead {
+  font-size: 1.12rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.contact-content p {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.contact-content em {
+  color: var(--accent);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.contact-action-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 12px;
+  padding: 20px 24px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.contact-note {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact-note strong {
+  font-size: 0.95rem;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.contact-note span {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
 /* ─── FOOTER ───────────────────────────────────────── */
 footer {
   position: relative;
