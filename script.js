@@ -432,18 +432,188 @@
       ctx.stroke();
     }
 
-    // ─── 6. FLOATING DANDELION / SEED SPORES ───
+    // ─── 6. LIVING DANDELION CLOCK & SERRATED BASAL LEAVES ───
+    const dBaseX = w * 0.78;
+    const dProg = 0.78;
+    const uD = 1 - dProg;
+    const dSurfY = (uD*uD*uD*frontHillP0) + (3*uD*uD*dProg*frontHillP1) + (3*uD*dProg*dProg*frontHillP2) + (dProg*dProg*dProg*frontHillP3);
+    const dBaseY = dSurfY + 16;
+    const stemLen = 130;
+    const clockRadius = 36;
+
+    // Organic harmonic wind pendulum sway
+    const baseHarmonic = Math.sin(t * 1.5) * 0.7 + Math.sin(t * 0.75 + 0.5) * 0.3;
+    const windSway = baseHarmonic * 16;
+    const stemTopX = dBaseX - 18 - windSway;
+    const stemTopY = dBaseY - stemLen;
+
+    // 6a. Dandelion Basal Rosette Leaves (dent-de-lion)
+    ctx.save();
+    ctx.fillStyle = '#166534';
+    // Left leaf
+    ctx.beginPath();
+    ctx.moveTo(dBaseX, dBaseY);
+    ctx.bezierCurveTo(dBaseX - 25, dBaseY - 8, dBaseX - 55, dBaseY + 6, dBaseX - 70, dBaseY + 14);
+    ctx.lineTo(dBaseX - 58, dBaseY + 9);
+    ctx.bezierCurveTo(dBaseX - 40, dBaseY + 12, dBaseX - 20, dBaseY + 8, dBaseX, dBaseY + 4);
+    ctx.closePath();
+    ctx.fill();
+    // Right leaf
+    ctx.beginPath();
+    ctx.moveTo(dBaseX, dBaseY);
+    ctx.bezierCurveTo(dBaseX + 20, dBaseY - 6, dBaseX + 48, dBaseY + 8, dBaseX + 62, dBaseY + 16);
+    ctx.lineTo(dBaseX + 50, dBaseY + 10);
+    ctx.bezierCurveTo(dBaseX + 35, dBaseY + 12, dBaseX + 18, dBaseY + 8, dBaseX, dBaseY + 4);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    // 6b. Smooth curving organic stem
+    ctx.save();
+    ctx.strokeStyle = '#15803d';
+    ctx.lineWidth = 4.2;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(dBaseX, dBaseY);
+    ctx.bezierCurveTo(dBaseX - 8, dBaseY - 45, dBaseX - 18 - windSway * 0.4, dBaseY - 90, stemTopX, stemTopY);
+    ctx.stroke();
+
+    // Stem highlight
+    ctx.strokeStyle = 'rgba(74, 222, 128, 0.45)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(dBaseX, dBaseY);
+    ctx.bezierCurveTo(dBaseX - 8, dBaseY - 45, dBaseX - 18 - windSway * 0.4, dBaseY - 90, stemTopX, stemTopY);
+    ctx.stroke();
+
+    // Receptacle core
+    const coreGrad = ctx.createRadialGradient(stemTopX, stemTopY, 1, stemTopX, stemTopY, 7);
+    coreGrad.addColorStop(0, '#fef08a');
+    coreGrad.addColorStop(0.5, '#f59e0b');
+    coreGrad.addColorStop(1, '#78350f');
+    ctx.fillStyle = coreGrad;
+    ctx.beginPath();
+    ctx.arc(stemTopX, stemTopY, 6.5, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 6c. Dandelion Clock Radial Filaments (Dense 3D Pappus Head)
+    const filaments = 32;
+    for (let f = 0; f < filaments; f++) {
+      const angle = (f / filaments) * (Math.PI * 2) + (windSway * 0.015);
+      const cosA = Math.cos(angle);
+      const sinA = Math.sin(angle);
+      const tipX = stemTopX + cosA * clockRadius;
+      const tipY = stemTopY + sinA * clockRadius;
+      const acheneX = stemTopX + cosA * 8;
+      const acheneY = stemTopY + sinA * 8;
+
+      // Brown seed body (achene)
+      ctx.strokeStyle = '#92400e';
+      ctx.lineWidth = 2.0;
+      ctx.beginPath();
+      ctx.moveTo(stemTopX, stemTopY);
+      ctx.lineTo(acheneX, acheneY);
+      ctx.stroke();
+
+      // White capillary stalk
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.moveTo(acheneX, acheneY);
+      ctx.lineTo(tipX, tipY);
+      ctx.stroke();
+
+      // Feathery Pappus Starlet Tuft
+      ctx.fillStyle = '#FFFFFF';
+      ctx.beginPath();
+      ctx.arc(tipX, tipY, 2.4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Tiny radial hairs
+      const tuftSpan = 5.2;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
+      ctx.lineWidth = 0.9;
+      for (let th = 0; th < 4; th++) {
+        const tAngle = angle + (th - 1.5) * 0.45;
+        ctx.beginPath();
+        ctx.moveTo(tipX, tipY);
+        ctx.lineTo(tipX + Math.cos(tAngle) * tuftSpan, tipY + Math.sin(tAngle) * tuftSpan);
+        ctx.stroke();
+      }
+    }
+
+    // Companion younger bud
+    const budBaseX = dBaseX - 38;
+    const budProg = budBaseX / w;
+    const uBud = 1 - budProg;
+    const budSurfY = (uBud*uBud*uBud*frontHillP0) + (3*uBud*uBud*budProg*frontHillP1) + (3*uBud*budProg*budProg*frontHillP2) + (budProg*budProg*budProg*frontHillP3);
+    const budSway = Math.sin(t * 1.8 + 0.8) * 10;
+    const budTopX = budBaseX - 16 - budSway;
+    const budTopY = budSurfY - 65;
+
+    ctx.strokeStyle = '#15803d';
+    ctx.lineWidth = 3.0;
+    ctx.beginPath();
+    ctx.moveTo(budBaseX, budSurfY + 12);
+    ctx.quadraticCurveTo(budBaseX - 8, budSurfY - 30, budTopX, budTopY);
+    ctx.stroke();
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath();
+    ctx.arc(budTopX, budTopY, 5, 0, Math.PI * 2);
+    ctx.fill();
+
+    for (let f = 0; f < 14; f++) {
+      const angle = (f / 14) * (Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.75)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(budTopX, budTopY);
+      ctx.lineTo(budTopX + Math.cos(angle) * 16, budTopY + Math.sin(angle) * 16);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // ─── 7. FEATHERY DRIFTING DANDELION SEEDS (Pappus Parachutes) ───
     spores.forEach(s => {
       s.x += s.speedX * dt;
-      if (s.x > w + 20) s.x = -20;
+      if (s.x > w + 40) s.x = -40;
       const sy = s.y + Math.sin(t * s.bobFreq + s.offset) * s.bobAmp;
-      ctx.fillStyle = `rgba(240, 253, 250, ${s.alpha})`;
+
+      // Seed achene (body)
+      ctx.save();
+      const seedAngle = (Math.PI / 4) + Math.sin(t * 0.8 + s.offset) * 0.2;
+      const bodyLen = s.size * 2.8;
+      const bodyEndX = s.x - Math.cos(seedAngle) * bodyLen;
+      const bodyEndY = sy + Math.sin(seedAngle) * bodyLen;
+
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 1.4;
+      ctx.lineCap = 'round';
       ctx.beginPath();
-      ctx.arc(s.x, sy, s.size, 0, Math.PI * 2);
+      ctx.moveTo(s.x, sy);
+      ctx.lineTo(bodyEndX, bodyEndY);
+      ctx.stroke();
+
+      // Feathery radial parachute hairs
+      const tuftRadius = s.size * 3.5;
+      ctx.strokeStyle = `rgba(255, 255, 255, ${s.alpha})`;
+      ctx.lineWidth = 1.1;
+      for (let b = 0; b < 6; b++) {
+        const tuftAngle = seedAngle + Math.PI + (b - 2.5) * 0.38;
+        ctx.beginPath();
+        ctx.moveTo(s.x, sy);
+        ctx.lineTo(s.x + Math.cos(tuftAngle) * tuftRadius, sy + Math.sin(tuftAngle) * tuftRadius);
+        ctx.stroke();
+      }
+      ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha + 0.2})`;
+      ctx.beginPath();
+      ctx.arc(s.x, sy, 1.4, 0, Math.PI * 2);
       ctx.fill();
+      ctx.restore();
     });
 
-    // ─── 7. ANIMATED BUTTERFLIES ───
+    // ─── 8. ANIMATED BUTTERFLIES ───
     butterflies.forEach(b => {
       b.update(dt, t);
       b.draw(ctx, t);
