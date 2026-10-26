@@ -242,51 +242,109 @@
 
     ctx.clearRect(0, 0, w, h);
 
-    // ─── 1. SKY GRADIENT (Nightfall tropical palette) ───
+    // ─── 1. SKY GRADIENT (Bright tropical sunlit sky) ───
     const skyGrad = ctx.createLinearGradient(0, 0, 0, h * 0.65);
-    skyGrad.addColorStop(0, '#040814');
-    skyGrad.addColorStop(0.5, '#071226');
-    skyGrad.addColorStop(1, '#0c1e38');
+    skyGrad.addColorStop(0, '#0369a1');  // Deep Cerulean Sky
+    skyGrad.addColorStop(0.35, '#0284c7');
+    skyGrad.addColorStop(0.7, '#38bdf8'); // Radiant Tropical Cyan
+    skyGrad.addColorStop(1, '#bae6fd');   // Luminous horizon glow
     ctx.fillStyle = skyGrad;
     ctx.fillRect(0, 0, w, h);
 
-    // Subtle twinkling stars in the high sky
-    const starCount = 65;
-    for (let i = 0; i < starCount; i++) {
-      const sx = ((i * 137.5) % w);
-      const sy = ((i * 83.1) % (h * 0.48));
-      const sAlpha = (Math.sin(t * 1.5 + i) * 0.5 + 0.5) * 0.6 + 0.15;
-      ctx.fillStyle = `rgba(224, 242, 254, ${sAlpha})`;
+    // ─── 1b. RADIANT SEYCHELLES SUN & VOLUMETRIC SUNBEAMS ───
+    const sunCenterX = w * 0.82;
+    const sunCenterY = h * 0.12;
+
+    // Volumetric warm outer glow
+    const sunHalo = ctx.createRadialGradient(sunCenterX, sunCenterY, 15, sunCenterX, sunCenterY, 240);
+    sunHalo.addColorStop(0, 'rgba(254, 240, 138, 0.45)');
+    sunHalo.addColorStop(0.35, 'rgba(253, 224, 71, 0.25)');
+    sunHalo.addColorStop(0.7, 'rgba(56, 189, 248, 0.12)');
+    sunHalo.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = sunHalo;
+    ctx.beginPath();
+    ctx.arc(sunCenterX, sunCenterY, 240, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Solid core sun disk
+    const sunCore = ctx.createRadialGradient(sunCenterX, sunCenterY, 4, sunCenterX, sunCenterY, 42);
+    sunCore.addColorStop(0, '#FFFFFF');
+    sunCore.addColorStop(0.4, '#FFFBEB');
+    sunCore.addColorStop(0.85, '#FEF08A');
+    sunCore.addColorStop(1, 'rgba(253, 224, 71, 0.8)');
+    ctx.fillStyle = sunCore;
+    ctx.beginPath();
+    ctx.arc(sunCenterX, sunCenterY, 36, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Radiating sunbeams across the sky
+    ctx.save();
+    for (let i = 0; i < 5; i++) {
+      const angle = (98 + i * 22) * (Math.PI / 180);
+      const beamLen = w * 0.9;
+      const endX = sunCenterX + Math.cos(angle) * beamLen;
+      const endY = sunCenterY + Math.sin(angle) * (h * 0.65);
+      const beamGrad = ctx.createLinearGradient(sunCenterX, sunCenterY, endX, endY);
+      beamGrad.addColorStop(0, 'rgba(254, 240, 138, 0.22)');
+      beamGrad.addColorStop(0.6, 'rgba(254, 240, 138, 0.05)');
+      beamGrad.addColorStop(1, 'transparent');
+      ctx.strokeStyle = beamGrad;
+      ctx.lineWidth = 42;
+      ctx.lineCap = 'round';
       ctx.beginPath();
-      ctx.arc(sx, sy, (i % 3 === 0) ? 1.2 : 0.8, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.moveTo(sunCenterX, sunCenterY);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
     }
+    ctx.restore();
+
+    // Gentle sunlit cumulus clouds in distance
+    ctx.save();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+    // Cloud 1
+    const c1X = ((t * 8) % (w + 300)) - 150;
+    ctx.beginPath();
+    ctx.arc(c1X, h * 0.30, 32, 0, Math.PI * 2);
+    ctx.arc(c1X + 28, h * 0.28, 42, 0, Math.PI * 2);
+    ctx.arc(c1X + 65, h * 0.30, 34, 0, Math.PI * 2);
+    ctx.arc(c1X + 38, h * 0.34, 30, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Cloud 2
+    const c2X = (((t * 12) + w * 0.55) % (w + 400)) - 200;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.28)';
+    ctx.beginPath();
+    ctx.arc(c2X, h * 0.24, 26, 0, Math.PI * 2);
+    ctx.arc(c2X + 26, h * 0.22, 36, 0, Math.PI * 2);
+    ctx.arc(c2X + 58, h * 0.24, 28, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
 
     // ─── 2. DISTANT SEYCHELLES GRANITIC ISLAND HORIZON ───
-    const oceanTopY = h * 0.56;
-    ctx.fillStyle = 'rgba(7, 28, 48, 0.85)';
+    const oceanTopY = h * 0.54;
+    ctx.fillStyle = 'rgba(3, 105, 161, 0.70)';
     ctx.beginPath();
-    ctx.moveTo(0, oceanTopY + 10);
-    ctx.bezierCurveTo(w * 0.18, oceanTopY - 22, w * 0.35, oceanTopY - 32, w * 0.52, oceanTopY - 8);
-    ctx.bezierCurveTo(w * 0.68, oceanTopY + 12, w * 0.82, oceanTopY - 18, w, oceanTopY + 6);
+    ctx.moveTo(0, oceanTopY + 12);
+    ctx.bezierCurveTo(w * 0.18, oceanTopY - 24, w * 0.35, oceanTopY - 34, w * 0.52, oceanTopY - 10);
+    ctx.bezierCurveTo(w * 0.68, oceanTopY + 14, w * 0.82, oceanTopY - 20, w, oceanTopY + 8);
     ctx.lineTo(w, oceanTopY + 30);
     ctx.lineTo(0, oceanTopY + 30);
     ctx.closePath();
     ctx.fill();
 
-    // ─── 3. TROPICAL OCEAN WATER LAYER ───
-    const oceanBottomY = h * 0.74;
+    // ─── 3. SUNNY TROPICAL OCEAN WATER LAYER ───
+    const oceanBottomY = h * 0.73;
     const oceanGrad = ctx.createLinearGradient(0, oceanTopY, 0, oceanBottomY);
-    oceanGrad.addColorStop(0, '#042749');
-    oceanGrad.addColorStop(0.35, '#034575');
-    oceanGrad.addColorStop(0.7, '#02588f');
-    oceanGrad.addColorStop(1, '#0369a1');
+    oceanGrad.addColorStop(0, '#0284c7'); // Deep Tropical Azure
+    oceanGrad.addColorStop(0.3, '#0ea5e9');
+    oceanGrad.addColorStop(0.65, '#38bdf8');
+    oceanGrad.addColorStop(1, '#06b6d4');  // Turquoise Coastline
 
     ctx.fillStyle = oceanGrad;
     ctx.beginPath();
     ctx.moveTo(0, oceanTopY);
     for (let x = 0; x <= w + 40; x += 40) {
-      const y = oceanTopY + Math.sin(t * 1.2 + x * 0.015) * 3.5;
+      const y = oceanTopY + Math.sin(t * 1.4 + x * 0.015) * 3.5;
       ctx.lineTo(x, y);
     }
     ctx.lineTo(w, oceanBottomY + 30);
@@ -294,31 +352,39 @@
     ctx.closePath();
     ctx.fill();
 
-    // Ocean light reflections / wave crest shimmers
-    ctx.strokeStyle = 'rgba(56, 189, 248, 0.28)';
-    ctx.lineWidth = 1.4;
-    ctx.lineCap = 'round';
+    // Sunlit wave specular glints & golden shimmer trails
     for (let row = 0; row < 6; row++) {
-      const rowY = oceanTopY + 12 + row * 16;
-      const waveOffset = Math.sin(t * 0.8 + row * 1.1) * 22;
-      const glintX = (w * 0.62) + waveOffset;
-      const glintW = 40 + row * 35;
+      const rowY = oceanTopY + 10 + row * 15;
+      const waveOffset = Math.sin(t * 1.1 + row * 1.1) * 18;
+      const glintX = (w * 0.75) + waveOffset;
+      const glintW = 35 + row * 38;
+      ctx.strokeStyle = 'rgba(254, 240, 138, 0.45)';
+      ctx.lineWidth = 1.8;
+      ctx.lineCap = 'round';
       ctx.beginPath();
       ctx.moveTo(glintX - glintW * 0.5, rowY);
       ctx.lineTo(glintX + glintW * 0.5, rowY);
       ctx.stroke();
+
+      // Ambient turquoise highlights
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.28)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(glintX - glintW * 0.8, rowY + 3);
+      ctx.lineTo(glintX - glintW * 0.3, rowY + 3);
+      ctx.stroke();
     }
 
-    // ─── 4. BACK GRANITIC MOSS HILL SLOPE ───
-    const backHillP0 = h * 0.66;
-    const backHillP1 = h * 0.58;
-    const backHillP2 = h * 0.62;
-    const backHillP3 = h * 0.72;
+    // ─── 4. BACK HILL LAYER (Deep Granitic Moss Slope) ───
+    const backHillP0 = h * 0.65;
+    const backHillP1 = h * 0.56;
+    const backHillP2 = h * 0.60;
+    const backHillP3 = h * 0.70;
 
     const backHillGrad = ctx.createLinearGradient(0, backHillP1, 0, h);
-    backHillGrad.addColorStop(0, '#064e3b');
-    backHillGrad.addColorStop(0.5, '#033327');
-    backHillGrad.addColorStop(1, '#021e17');
+    backHillGrad.addColorStop(0, '#15803d');
+    backHillGrad.addColorStop(0.5, '#166534');
+    backHillGrad.addColorStop(1, '#14532d');
 
     ctx.fillStyle = backHillGrad;
     ctx.beginPath();
@@ -329,17 +395,17 @@
     ctx.closePath();
     ctx.fill();
 
-    // ─── 5. FOREGROUND LUSH COASTAL BLUFF / HILL ───
-    const frontHillP0 = h * 0.76;
-    const frontHillP1 = h * 0.67;
-    const frontHillP2 = h * 0.72;
-    const frontHillP3 = h * 0.83;
+    // ─── 5. FOREGROUND LUSH COASTAL BLUFF / HILL (Sunlit Emerald Grass) ───
+    const frontHillP0 = h * 0.75;
+    const frontHillP1 = h * 0.65;
+    const frontHillP2 = h * 0.70;
+    const frontHillP3 = h * 0.82;
 
     const frontHillGrad = ctx.createLinearGradient(0, frontHillP1, 0, h);
-    frontHillGrad.addColorStop(0, '#059669'); // Emerald crest
-    frontHillGrad.addColorStop(0.3, '#047857');
-    frontHillGrad.addColorStop(0.7, '#064e3b');
-    frontHillGrad.addColorStop(1, '#022c22');
+    frontHillGrad.addColorStop(0, '#4ade80'); // Sunlit Emerald Crest
+    frontHillGrad.addColorStop(0.25, '#22c55e');
+    frontHillGrad.addColorStop(0.65, '#16a34a');
+    frontHillGrad.addColorStop(1, '#14532d');
 
     ctx.fillStyle = frontHillGrad;
     ctx.beginPath();
@@ -350,20 +416,19 @@
     ctx.closePath();
     ctx.fill();
 
-    // Fine swaying wind grass blades along the front crest
-    const grassBlades = 36;
-    ctx.strokeStyle = 'rgba(52, 211, 153, 0.45)';
-    ctx.lineWidth = 1.8;
+    // Sun-kissed swaying grass blades along the front crest
+    const grassBlades = 42;
+    ctx.strokeStyle = 'rgba(74, 222, 128, 0.75)';
+    ctx.lineWidth = 1.9;
     for (let i = 0; i < grassBlades; i++) {
       const prog = i / (grassBlades - 1);
       const gx = w * prog;
-      // Bezier curve height calculation
       const u = 1 - prog;
       const gy = (u*u*u*frontHillP0) + (3*u*u*prog*frontHillP1) + (3*u*prog*prog*frontHillP2) + (prog*prog*prog*frontHillP3);
-      const sway = Math.sin(t * 1.8 + i * 0.3) * (7 + (i % 4) * 2);
+      const sway = Math.sin(t * 2.0 + i * 0.28) * (8 + (i % 4) * 2.5);
       ctx.beginPath();
       ctx.moveTo(gx, gy + 3);
-      ctx.quadraticCurveTo(gx - sway * 0.5, gy - 12, gx - sway, gy - 24 - (i % 5) * 3);
+      ctx.quadraticCurveTo(gx - sway * 0.5, gy - 13, gx - sway, gy - 26 - (i % 6) * 3);
       ctx.stroke();
     }
 

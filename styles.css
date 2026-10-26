@@ -2,16 +2,16 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #070d1a;
-  --bg2:       #0d1628;
-  --panel:     rgba(255,255,255,0.04);
-  --border:    rgba(255,255,255,0.08);
+  --bg:        #061325;
+  --bg2:       #0a1d38;
+  --panel:     rgba(10, 29, 56, 0.65);
+  --border:    rgba(56, 189, 248, 0.16);
   --accent:    #38bdf8;
   --accent2:   #818cf8;
   --accent3:   #34d399;
-  --text:      #f1f5f9;
-  --muted:     #94a3b8;
-  --glow:      rgba(56,189,248,0.18);
+  --text:      #f8fafc;
+  --muted:     #cbd5e1;
+  --glow:      rgba(56,189,248,0.22);
   --radius:    16px;
   font-size: 16px;
 }
@@ -411,7 +411,8 @@ hr.section-divider {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
   overflow: hidden;
 }
