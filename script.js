@@ -57,15 +57,15 @@
     }
 
     reset() {
-      // Start randomly offscreen or across width
+      // Companion butterflies fly across the screen
       this.x = Math.random() < 0.5 ? -60 : w + 60;
       this.direction = this.x < 0 ? 1 : -1;
       this.targetX = this.direction > 0 ? w + 80 : -80;
-      this.y = h * (0.2 + Math.random() * 0.45);
+      this.y = h * (0.15 + Math.random() * 0.45);
       this.baseY = this.y;
       this.speedX = (45 + Math.random() * 40) * this.direction;
       this.waveFreq = 1.2 + Math.random() * 1.6;
-      this.waveAmp = 15 + Math.random() * 25;
+      this.waveAmp = 12 + Math.random() * 20;
       this.flapSpeed = 12 + Math.random() * 6;
       this.timeOffset = Math.random() * 100;
     }
@@ -83,16 +83,22 @@
 
     draw(ctx, t) {
       const flap = Math.sin((t + this.timeOffset) * this.flapSpeed);
-      const heading = this.direction > 0 ? (flap * 6 + 10) : (flap * 6 - 190);
-      drawButterfly(ctx, this.x, this.y, flap, heading, this.scale, this.palette);
+      // Gentle pitch angle following the wave slope: head always stays upwards (-20° to +20°)
+      const waveSlope = Math.cos((t + this.timeOffset) * this.waveFreq);
+      const pitch = (waveSlope * 12) + (flap * 4);
+      // Keep upright: flip horizontally when moving left instead of rotating 180 degrees upside-down
+      drawButterfly(ctx, this.x, this.y, flap, pitch, this.scale, this.palette, this.direction < 0);
     }
   }
 
   // Draw vectorized butterfly wings and slender body matching SeyMeteo specification
-  function drawButterfly(ctx, cx, cy, flapFactor, rotationDeg, scale, palette) {
+  function drawButterfly(ctx, cx, cy, flapFactor, rotationDeg, scale, palette, flipH = false) {
     const absFlap = Math.max(0.12, Math.abs(flapFactor));
     ctx.save();
     ctx.translate(cx, cy);
+    if (flipH) {
+      ctx.scale(-1, 1);
+    }
     ctx.rotate((rotationDeg * Math.PI) / 180);
 
     const wingW = 22 * scale * absFlap;
