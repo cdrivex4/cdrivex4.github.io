@@ -16,7 +16,7 @@ This repository hosts the official personal portfolio and systems architecture s
 
 1. **[QGalleryX](https://github.com/cdrivex4/QGalleryX)**  
    Ultra-fast, hardware-accelerated C++/Qt media application exploring large-scale file management, D3D11/FFmpeg video thumbnailing, and SIMD optimizations.
-2. **[BrizSey (BrizSey-Public)](https://github.com/cdrivex4/BrizSey-Public)**  
+2. **[BrizSey (BrizSey-release)](https://github.com/cdrivex4/BrizSey-release)**  
    Fluid glassmorphic meteorological & marine intelligence Android application for the Seychelles archipelago, featuring ASTER 30m DEM terrain microclimates and direct public APK releases.
 3. **[SeyParcel3D](https://github.com/cdrivex4/SeyParcel3D)**  
    3D WebGIS cadastral parcel visualizer, terrain synthesis, and metric CAD/BIM site plan preparation engine (DXF/OBJ/LandXML).
@@ -27,5 +27,5 @@ This repository hosts the official personal portfolio and systems architecture s
 
 ## Recent Changelog
 
-* **2026-11-08:** Updated BrizSey showcase to route to the official public distribution conduit (`BrizSey-Public`), clarifying its research prototype status and linking visitors to verified APK release history.
+* **2026-11-08:** Published BrizSey Release Candidate 1 (`BrizSeyRC1`) to the official public release repository (`https://github.com/cdrivex4/BrizSey-release`), complete with verified APK downloads, showcase imagery, and centralized GitHub issue tracking.
 * **2026-10-26:** Visual polish, glassmorphism translucency tuning, and responsive grid layout refinements.
